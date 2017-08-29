@@ -8,7 +8,7 @@ import (
 type PAAS interface {
 	Login(api string, username string, password string, insecure bool) error
 	Target(organization string, space string) error
-	PushApp(manifest string, path string, currentAppName string) error
+	PushApp(manifest string, path string, currentAppName string, dockerImage string) error
 }
 
 type CloudFoundry struct{}
@@ -35,7 +35,7 @@ func (cf *CloudFoundry) Target(organization string, space string) error {
 	return cf.cf("target", "-o", organization, "-s", space).Run()
 }
 
-func (cf *CloudFoundry) PushApp(manifest string, path string, currentAppName string) error {
+func (cf *CloudFoundry) PushApp(manifest string, path string, currentAppName string, dockerImage string) error {
 	args := []string{}
 
 	if currentAppName == "" {
@@ -44,6 +44,10 @@ func (cf *CloudFoundry) PushApp(manifest string, path string, currentAppName str
 		args = append(args, "zero-downtime-push", currentAppName, "-f", manifest)
 	}
 
+	if dockerImage == !"" {
+		args = append(args, "-o", dockerImage)
+	}
+	
 	if path != "" {
 		stat, err := os.Stat(path)
 		if err != nil {
