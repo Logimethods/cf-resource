@@ -44,7 +44,7 @@ func (cf *CloudFoundry) PushApp(manifest string, path string, currentAppName str
 		args = append(args, "zero-downtime-push", currentAppName, "-f", manifest)
 	}
 
-	if dockerImage == !"" {
+	if dockerImage != "" {
 		args = append(args, "-o", dockerImage)
 	}
 	

@@ -11,7 +11,7 @@ type Params struct {
 	ManifestPath         string            `json:"manifest"`
 	Path                 string            `json:"path"`
 	CurrentAppName       string            `json:"current_app_name"`
-	DockerImage       	 string            `json:"docker_image"`
+	DockerImage          string            `json:"docker_image"`
 	EnvironmentVariables map[string]string `json:"environment_variables"`
 }
 
